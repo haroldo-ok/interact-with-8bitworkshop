@@ -1,0 +1,23 @@
+{
+  "files": [],
+  "references": [
+    {
+      "path": "./src/common"
+    },
+    {
+      "path": "./src/machine"
+    },
+    {
+      "path": "./src/platform"
+    },
+    {
+      "path": "./src/ide"
+    },
+    {
+      "path": "./src/worker"
+    },
+    {
+      "path": "./src/tools"
+    }
+  ]
+}

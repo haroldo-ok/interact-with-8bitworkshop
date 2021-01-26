@@ -1,0 +1,75 @@
+{
+  "name": "8bitworkshop",
+  "version": "3.7.1",
+  "author": "Steven Hugg",
+  "description": "8bitworkshop.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sehugg/8bitworkshop.git"
+  },
+  "license": "GPL-3.0",
+  "dependencies": {
+    "chokidar": "^3.5.0",
+    "electron-store": "^6.0.1",
+    "jquery": "^3.5.1",
+    "reflect-metadata": "^0.1.13",
+    "update-electron-app": "^1.5.0"
+  },
+  "devDependencies": {
+    "@types/bootbox": "^4.4.36",
+    "@types/bootstrap": "^3.4.0",
+    "@types/file-saver": "^2.0.1",
+    "@types/jquery": "^3.5.5",
+    "@types/node": "^14.14.20",
+    "atob": "^2.1.x",
+    "bootstrap": "^3.4.1",
+    "bootstrap-tourist": "^0.2.1",
+    "btoa": "^1.2.x",
+    "clipboard": "^2.0.6",
+    "electron": "^9.4.0",
+    "electron-packager": "^15.2.0",
+    "file-saver": "^2.0.5",
+    "jsdom": "^12.2.0",
+    "jsfuzz": "^1.0.14",
+    "jszip": "^3.5.0",
+    "localforage": "^1.9.0",
+    "lzg": "^1.0.x",
+    "mocha": "^7.2.0",
+    "mousetrap": "^1.6.5",
+    "octokat": "^0.10.0",
+    "pngjs": "^3.4.0",
+    "rgbquant": "^1.1.2",
+    "split.js": "^1.6.2",
+    "typescript": "^3.9.7",
+    "typescript-formatter": "^7.2.2",
+    "vgm-parser": "^0.6.3"
+  },
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "build": "make",
+    "test": "npm run test-node",
+    "test-one": "NODE_PATH=$(pwd) mocha --recursive --timeout 60000",
+    "test-node": "NODE_PATH=$(pwd) mocha --recursive --timeout 60000 test/cli",
+    "test-worker": "NODE_PATH=$(pwd) mocha --recursive --timeout 60000 test/cli/testworker.js",
+    "test-platforms": "NODE_PATH=$(pwd) mocha --recursive --timeout 60000 test/cli/testplatforms.js",
+    "test-profile": "NODE_PATH=$(pwd) mocha --recursive --timeout 60000 --prof test/cli",
+    "start": "electron .",
+    "fuzzbasic": "jsfuzz gen/common/basic/fuzz.js ~/basic/corpus/ --versifier false",
+    "machine": "node gen/tools/runmachine.js"
+  },
+  "main": "electron.js",
+  "keywords": [
+    "8bit",
+    "ide",
+    "retrodev",
+    "6502",
+    "z80"
+  ],
+  "bugs": {
+    "url": "https://github.com/sehugg/8bitworkshop/issues"
+  },
+  "homepage": "https://github.com/sehugg/8bitworkshop#readme"
+}
