@@ -13,10 +13,12 @@
 </head>
 
 <body style="height: 100%; overflow: hidden; background: #2c2c2c; color: rgb(255, 255, 236)">
-	<div id="toolbar" style="width: 100px; height: 100%">
+	<div id="toolbar" style="width: 500px; height: 100%">
 		AAAAAAA
+		
+		<div id="checkBoxes"></div>
 	</div>
-	<iframe id="ide" style="position: absolute; left: 100px; top: 0; height: 100%; width: calc(100% - 100px);"></iframe>
+	<iframe id="ide" style="position: absolute; left: 500px; top: 0; height: 100%; width: calc(100% - 500px);"></iframe>
 	
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script>
@@ -44,6 +46,32 @@
 				if ((codeMirror.getValue() || '').trim().length < 10) {
 					codeMirror.setValue(' rem Hello World\r\n\r\n playfield:\r\n................................\r\n......X.X.XXX.X...X...XXX.......\r\n......X.X.X...X...X...X.X.......\r\n......XXX.XX..X...X...X.X.......\r\n......X.X.X...X...X...X.X.......\r\n......X.X.XXX.XXX.XXX.XXX.......\r\n................................\r\n.....X...X.XXX.XX..X...XX.......\r\n.....X...X.X.X.X.X.X...X.X......\r\n.....X.X.X.X.X.XX..X...X.X......\r\n.....XX.XX.XXX.X.X.XXX.XX.......\r\nend\r\n\r\n COLUPF = 22\r\n COLUBK = 2\r\n\r\nmainloop\r\n drawscreen\r\n score = score + 1\r\n goto mainloop\r\n');
 				}
+				
+				const getPlayfieldSource = () => {
+					const playfieldResult = /[ \t]+playfield:\s*\n(.*?)\n\s*end\s*\n/gs.exec(codeMirror.getValue());
+					return playfieldResult && playfieldResult[1];
+				};
+				
+				const updateCheckBoxes = () => {
+					const pfSource = getPlayfieldSource();
+					if (!pfSource) {
+						return;
+					}
+					
+					const pfMatrix = pfSource.trim().split(/\n/g).map(l => l.trim().split(''));
+					
+					const checkBoxes = $('#checkBoxes')[0];
+					checkBoxes.innerHTML = pfMatrix
+						.map(line => 
+							'<div style="line-height: 0">' + 
+								line.map(cell => '<input type="checkbox" ' + (cell === 'X' ? 'checked' : '') + '>' ).join('') + 
+							'</div>')
+						.join('\n');
+					
+					console.warn('Contents: ', pfMatrix);
+				}
+				
+				updateCheckBoxes();
 			});
 		});
 	</script>
