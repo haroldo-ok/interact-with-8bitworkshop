@@ -47,9 +47,11 @@
 					codeMirror.setValue(' rem Hello World\r\n\r\n playfield:\r\n................................\r\n......X.X.XXX.X...X...XXX.......\r\n......X.X.X...X...X...X.X.......\r\n......XXX.XX..X...X...X.X.......\r\n......X.X.X...X...X...X.X.......\r\n......X.X.XXX.XXX.XXX.XXX.......\r\n................................\r\n.....X...X.XXX.XX..X...XX.......\r\n.....X...X.X.X.X.X.X...X.X......\r\n.....X.X.X.X.X.XX..X...X.X......\r\n.....XX.XX.XXX.X.X.XXX.XX.......\r\nend\r\n\r\n COLUPF = 22\r\n COLUBK = 2\r\n\r\nmainloop\r\n drawscreen\r\n score = score + 1\r\n goto mainloop\r\n');
 				}
 				
+				const PF_REGEX = /([ \t]+playfield:\s*\n)(.*?)(\n\s*end\s*\n)/gs;
+				
 				const getPlayfieldSource = () => {
-					const playfieldResult = /[ \t]+playfield:\s*\n(.*?)\n\s*end\s*\n/gs.exec(codeMirror.getValue());
-					return playfieldResult && playfieldResult[1];
+					const playfieldResult = PF_REGEX.exec(codeMirror.getValue());
+					return playfieldResult && playfieldResult[2];
 				};
 				
 				const updateCheckBoxes = () => {
@@ -71,7 +73,19 @@
 					console.warn('Contents: ', pfMatrix);
 				}
 				
+				const updateSourceFromCheckboxes = () => {
+					const chkArray = $('#checkBoxes div').toArray().map(div =>  $(div).children('input').toArray().map(check => check.checked));
+					const generatedSource = chkArray.map(line => line.map(b => b ? 'X' : '.').join('')).join('\n');
+					codeMirror.setValue(codeMirror.getValue().replace(PF_REGEX, '$1' + generatedSource + '$3'));
+					
+					console.warn('AAA', chkArray);
+				}
+				
 				updateCheckBoxes();
+				codeMirror.on('change', updateCheckBoxes);				
+				$('#checkBoxes').on('click', updateSourceFromCheckboxes);
+				
+				//$('#checkBoxes div').map((i, div) =>  $(div).children('input').map((i, check) => check.checked));
 			});
 		});
 	</script>
